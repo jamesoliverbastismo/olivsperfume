@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout – Oliv's Fresh Essence</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Checkout</h1>
+    <form method="POST">
+        <label>Full Name:</label><br>
+        <input type="text" name="fullname" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label>Address:</label><br>
+        <input type="text" name="address" required><br><br>
+
+        <label>Phone:</label><br>
+        <input type="text" name="phone" required><br><br>
+
+        <label>Notes:</label><br>
+        <textarea name="notes"></textarea><br><br>
+
+        <button type="submit">Place Order</button>
+    </form>
+    <a href="{{ url_for('cart') }}">← Back to Cart</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oliv's Fresh Essence – Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{{ 'Our Perfume Collection' if lang == 'en' else 'Koleksyon ng Aming Pabango' }}</h1>
+    <div class="product-grid">
+        {% for perfume in perfumes %}
+        <div class="product-card">
+            <img src="{{ url_for('static', filename=perfume.image) }}" alt="{{ perfume.name }}" class="product-image">
+            <h3>{{ perfume.name }}</h3>
+            <p><strong>{{ 'Category' if lang == 'en' else 'Kategorya' }}:</strong> {{ perfume.category }}</p>
+            <p><strong>{{ 'Price' if lang == 'en' else 'Presyo' }}:</strong> ₱{{ perfume.price }}</p>
+            <p>{{ perfume.description }}</p>
+            <form method="POST" action="{{ url_for('add_to_cart', id=perfume.id) }}">
+                <button type="submit">{{ 'Add to Cart' if lang == 'en' else 'Idagdag sa Cart' }}</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('cart') }}">🛒 {{ 'View Cart' if lang == 'en' else 'Tingnan ang Cart' }}</a>
+    <br><br>
+    <a href="{{ url_for('set_language', lang='en') }}">English</a> |
+    <a href="{{ url_for('set_language', lang='fil') }}">Filipino</a>
+</body>
+</html>
