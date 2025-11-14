@@ -204,5 +204,11 @@ def admin_orders():
 def about():
     return render_template('about.html')
 
+@app.route('/my_orders')
+@login_required
+def my_orders():
+    orders = Order.query.filter_by(user_id=current_user.id).all()
+    return render_template('my_orders.html', orders=orders)
+
 if __name__ == '__main__':
     app.run(debug=True)

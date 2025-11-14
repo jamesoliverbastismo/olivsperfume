@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Dashboard – Oliv's Fresh Essence</title>
+  <title>My Orders – Oliv's Fresh Essence</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -44,7 +44,7 @@
       color: #333;
     }
 
-    main.admin {
+    main.orders {
       max-width: 800px;
       margin: 40px auto;
       padding: 40px 30px;
@@ -53,51 +53,31 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .admin h1 {
+    .orders h1 {
       text-align: center;
       color: #caa169;
       margin-bottom: 30px;
     }
 
-    .admin p {
-      font-size: 16px;
-      margin-bottom: 10px;
+    .order-card {
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    .admin h2 {
-      margin-top: 30px;
-      margin-bottom: 15px;
+    .order-card h3 {
+      margin-top: 0;
       color: #444;
     }
 
-    .admin ul {
-      list-style: none;
-      padding: 0;
+    .order-card p {
+      margin: 6px 0;
     }
 
-    .admin li {
-      background-color: #fff;
-      padding: 12px 16px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .admin a.button {
-      background-color: #caa169;
-      color: white;
-      padding: 8px 14px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .admin a.button:hover {
-      background-color: black;
+    .order-card em {
+      color: #888;
     }
 
     footer {
@@ -132,23 +112,23 @@
     </div>
   </header>
 
-  <main class="admin">
-    <h1>Admin Dashboard</h1>
-    <p>Total Products: {{ perfumes|length }}</p>
-    <p>Total Orders: {{ total_orders }}</p>
-
-    <h2>Manage Products</h2>
-    <a href="{{ url_for('add_product') }}" class="button">➕ Add New Product</a>
-    <ul>
-      {% for perfume in perfumes %}
-      <li>
-        <span>{{ perfume.name }} – ₱{{ perfume.price }}</span>
-        <a href="{{ url_for('delete_product', id=perfume.id) }}" class="button">🗑 Delete</a>
-      </li>
+  <main class="orders">
+    <h1>My Orders</h1>
+    {% if orders %}
+      {% for order in orders %}
+      <div class="order-card">
+        <h3>Order #{{ order.id }}</h3>
+        <p><strong>Full Name:</strong> {{ order.fullname }}</p>
+        <p><strong>Email:</strong> {{ order.email }}</p>
+        <p><strong>Address:</strong> {{ order.address }}</p>
+        <p><strong>Phone:</strong> {{ order.phone }}</p>
+        <p><strong>Notes:</strong> {{ order.notes or 'None' }}</p>
+        <p><em>Estimated Delivery: 3–5 days from order date</em></p>
+      </div>
       {% endfor %}
-    </ul>
-
-    <a href="{{ url_for('admin_orders') }}" class="button">📦 View Orders</a>
+    {% else %}
+      <p>You have no orders yet.</p>
+    {% endif %}
   </main>
 
   <footer>

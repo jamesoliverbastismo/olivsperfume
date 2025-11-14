@@ -1,30 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Checkout – Oliv's Fresh Essence</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>Checkout – Oliv's Fresh Essence</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #fff8f0, #fbe9d0);
+      color: #333;
+    }
+
+    header {
+      background-color: #caa169;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #333;
+    }
+
+    main.checkout {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 40px 30px;
+      background-color: rgba(255,255,255,0.95);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .checkout h1 {
+      text-align: center;
+      color: #caa169;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      background-color: #caa169;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: black;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #caa169;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      background-color: transparent;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="logo-nav">
+      <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Oliv Logo">
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('logout') }}">Logout</a>
+          {% if current_user.is_admin %}
+            <a href="{{ url_for('admin') }}">Admin</a>
+          {% endif %}
+        {% else %}
+          <a href="{{ url_for('signup') }}">Sign Up</a>
+          <a href="{{ url_for('login') }}">Log In</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="checkout">
     <h1>Checkout</h1>
     <form method="POST">
-        <label>Full Name:</label><br>
-        <input type="text" name="fullname" required><br><br>
+      <label>Full Name:</label>
+      <input type="text" name="fullname" required>
 
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
+      <label>Email:</label>
+      <input type="email" name="email" required>
 
-        <label>Address:</label><br>
-        <input type="text" name="address" required><br><br>
+      <label>Address:</label>
+      <input type="text" name="address" required>
 
-        <label>Phone:</label><br>
-        <input type="text" name="phone" required><br><br>
+      <label>Phone:</label>
+      <input type="text" name="phone" required>
 
-        <label>Notes:</label><br>
-        <textarea name="notes"></textarea><br><br>
+      <label>Notes:</label>
+      <textarea name="notes"></textarea>
 
-        <button type="submit">Place Order</button>
+      <button type="submit">Place Order</button>
     </form>
-    <a href="{{ url_for('cart') }}">← Back to Cart</a>
+    <a href="{{ url_for('cart') }}" class="back-link">← Back to Cart</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Oliv's Fresh Essence. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>

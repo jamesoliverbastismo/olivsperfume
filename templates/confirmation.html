@@ -1,14 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Order Confirmed – Oliv's Fresh Essence</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>Order Confirmed – Oliv's Fresh Essence</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #fff8f0, #fbe9d0);
+      color: #333;
+    }
+
+    header {
+      background-color: #caa169;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #333;
+    }
+
+    main.confirmation {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 40px 30px;
+      background-color: rgba(255,255,255,0.95);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .confirmation h1 {
+      font-size: 32px;
+      color: #caa169;
+      margin-bottom: 20px;
+    }
+
+    .confirmation p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .confirmation a {
+      background-color: #caa169;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .confirmation a:hover {
+      background-color: black;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      background-color: transparent;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="logo-nav">
+      <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Oliv Logo">
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('logout') }}">Logout</a>
+          {% if current_user.is_admin %}
+            <a href="{{ url_for('admin') }}">Admin</a>
+          {% endif %}
+        {% else %}
+          <a href="{{ url_for('signup') }}">Sign Up</a>
+          <a href="{{ url_for('login') }}">Log In</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="confirmation">
     <h1>Thank You!</h1>
     <p>Your order has been placed successfully.</p>
-    <pWe’ll contact you soon for delivery details.</p>
+    <p>We’ll contact you soon for delivery details.</p>
     <a href="{{ url_for('products') }}">← Back to Products</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Oliv's Fresh Essence. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>
